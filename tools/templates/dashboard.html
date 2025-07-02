@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToolMitra</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+    .tool-card {
+      border-radius: 1rem;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      cursor: pointer;
+      animation: fadeInUp 0.8s ease both;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      width: 160%;
+      height: 160%;
+      background: linear-gradient(45deg, rgba(0, 123, 255, 0.05), rgba(0, 198, 255, 0.05));
+      top: -50%;
+      left: -50%;
+      transform: rotate(25deg);
+      transition: 0.6s;
+    }
+    .tool-card:hover::before {
+      top: -30%;
+      left: -30%;
+      transform: rotate(45deg);
+    }
+    .tool-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    .tool-icon {
+      font-size: 2.5rem;
+      transition: transform 0.3s ease;
+    }
+    .tool-card:hover .tool-icon {
+      transform: scale(1.3);
+    }
+    .navbar-custom {
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: white !important;
+    }
+    .navbar-nav .nav-link {
+      color: white !important;
+      font-weight: 500;
+      transition: font-size 0.5s ease;
+    }
+    .navbar-nav .nav-link:hover {
+      font-size: 17px;
+    }
+   .tool-card {
+    animation: fadeInUp 0.8s ease both;
+    animation-delay: var(--delay, 0s);
+    }
+
+    .scroll-fade {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .scroll-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+    }
+
+    @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+    @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+  <!-- side Baar link css  -->
+  <style>
+    .contact-sidebar {
+    position: fixed;
+    top: 40%;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 10px;
+    }
+
+    .contact-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.2),
+                inset 3px 3px 6px rgba(0, 0, 0, 0.2),
+                4px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease-in-out;
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .contact-icon::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 50%;
+    height: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    filter: blur(1px);
+    }
+
+    .contact-icon:hover {
+    transform: scale(1.1) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Color themes */
+    .contact-icon.whatsapp {
+    background: #25D366;
+    }
+
+    .contact-icon.phone {
+    background: #0d6efd;
+    }
+
+    .contact-icon.email {
+    background: #dc3545;
+    }
+    .contact-icon.sms {
+    background: #dca235;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom shadow sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/"><img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 50px;"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/remove-background/">Background Remover</a></li>
+          <li class="nav-item"><a class="nav-link" href="/enhance-image/">Image Enhancer</a></li>
+          <li class="nav-item"><a class="nav-link" href="/compress-image/">Image Compressor</a></li>
+          <li class="nav-item"><a class="nav-link" href="/crop-image/">Crop Image</a></li>
+          <li class="nav-item"><a class="nav-link" href="/image-to-pdf/">Image to PDF</a></li>
+          <li class="nav-item"><a class="nav-link" href="/stamp-file/">Stamp Tool</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/rajadityasharma/multitool" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    <!-- Floating 3D Contact Sidebar -->
+    <div class="contact-sidebar">
+    <a href="https://wa.me/7488584509?text=Hi%20ToolMitra%20Team%2C%20I%20need%20help%20with%20your%20image%20tools." target="_blank" class="contact-icon whatsapp" title="WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+    <a href="tel:+917488584509" class="contact-icon phone" title="Call">
+        <i class="bi bi-telephone-fill"></i>
+    </a>
+    <a href="mailto:adityasharmamama@gmail.com.app?subject=Support%20Request%20from%20ToolMitra&body=Hi%20ToolMitra%20Team,%0A%0AI%20need%20help%20with%20your%20image%20tools.%20Please%20guide%20me%20with%20the%20steps.%0A%0AThanks!" class="contact-icon email" title="Email">
+        <i class="bi bi-envelope-fill"></i>
+    </a>
+    <a href="sms:+919876543210?&body=Hi%20ToolMitra%20team%2C%20I%20need%20help%20with%20the%20image%20compressor." class="contact-icon sms">
+        <i class="bi bi-chat-dots"></i>
+    </a>
+    </div>
+
+  <div class="container py-5 scroll-fade">
+    <h2 class="text-center fw-bold mb-5">🛠️ Image Tools Dashboard</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <a href="/remove-background/" class="text-decoration-none text-dark">
+          <div class="card tool-card p-3 text-center h-100">
+            <div class="tool-icon">🧼</div>
+            <h5 class="mt-3">Background Remover</h5>
+          </div>
+        </a>
+      </div>
+      <div class="col" style="--delay: 0.3s;">
+        <a href="/enhance-image/" class="text-decoration-none text-dark">
+          <div class="card tool-card p-3 text-center h-100">
+            <div class="tool-icon">✨</div>
+            <h5 class="mt-3">Image Enhancer</h5>
+          </div>
+        </a>
+      </div>
+      <div class="col" style="--delay: 0.4s;">
+        <a href="/compress-image/" class="text-decoration-none text-dark">
+          <div class="card tool-card p-3 text-center h-100">
+            <div class="tool-icon">📉</div>
+            <h5 class="mt-3">Image Compressor</h5>
+          </div>
+        </a>
+      </div>
+      <div class="col" style="--delay: 0.5s;">
+        <a href="/crop-image/" class="text-decoration-none text-dark">
+          <div class="card tool-card p-3 text-center h-100">
+            <div class="tool-icon">✂️</div>
+            <h5 class="mt-3">Crop Image</h5>
+          </div>
+        </a>
+      </div>
+      <div class="col" style="--delay: 0.6s;">
+        <a href="/image-to-pdf/" class="text-decoration-none text-dark">
+          <div class="card tool-card p-3 text-center h-100">
+            <div class="tool-icon">📄</div>
+            <h5 class="mt-3">Image to PDF</h5>
+          </div>
+        </a>
+      </div>
+      <div class="col" style="--delay: 0.7s;">
+        <a href="/stamp-file/" class="text-decoration-none text-dark">
+          <div class="card tool-card p-3 text-center h-100">
+            <div class="tool-icon">🔖</div>
+            <h5 class="mt-3">Stamp Image</h5>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- About Section - Enhanced -->
+   <div style="background: linear-gradient(rgba(255, 255, 255, 0.038), rgb(211, 235, 230), rgba(127, 215, 197, 0));">
+    <div class="container py-5 scroll-fade">
+        <div class="row align-items-center g-5">
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+            <h2 class="fw-bold mb-4">🔍 About ToolMitra</h2>
+            <p class="text-muted fs-5">ToolMitra is your personal suite of essential image tools crafted for speed, accuracy, and ease of use. Whether you’re a designer, student, marketer, or just someone who needs quick image fixes — ToolMitra empowers you with high-quality utilities without the need for sign-ups or installs.</p>
+            <ul class="list-unstyled text-muted">
+                <li>🧩 Seamless experience — no ads or distractions</li>
+                <li>🧠 AI-powered enhancements and tools</li>
+                <li>💡 Built with Django, OpenCV, Pillow, and modern UI/UX</li>
+                <li>🛡️ We respect your privacy — nothing is stored</li>
+            </ul>
+            </div>
+            <div class="col-md-6 text-center animate__animated animate__fadeInRight">
+            <img src="https://cdn-icons-png.flaticon.com/512/1024/1024647.png" class="img-fluid" style="max-height: 320px;">
+            </div>
+        </div>
+    </div>
+   </div>
+
+<!-- What We Offer (Tools Explained with Images Side-by-Side) -->
+<div class="container py-5">
+  <div class="text-center mb-5 scroll-fade">
+    <h2 class="fw-bold">🧰 Our Services</h2>
+    <p class="text-muted fs-5">A powerful suite of smart tools built to simplify your image processing needs. Whether you’re editing a photo, preparing a document, or enhancing graphics, ToolMitra gives you control and clarity at your fingertips — without requiring any special software or login.</p>
+  </div>
+
+  <!-- Tool: Background Remover -->
+  <div class="row align-items-center g-4 mb-5 scroll-fade">
+    <div class="col-md-6 animate__animated animate__fadeInLeft">
+      <h4>🧼 Background Remover</h4>
+      <p class="text-muted fs-5">Instantly eliminate unwanted backgrounds from images using cutting-edge AI. You can replace it with a transparent layer, a solid color of your choice, smooth gradient blends, or even upload a custom background image to overlay seamlessly.</p>
+    </div>
+    <div class="col-md-6 text-center animate__animated animate__fadeInRight">
+      <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+    </div>
+  </div>
+  <hr>
+  <!-- Tool: Image Enhancer -->
+  <div class="row align-items-center g-4 mb-5 flex-md-row-reverse scroll-fade">
+    <div class="col-md-6 animate__animated animate__fadeInRight">
+      <h4>✨ Image Enhancer</h4>
+      <p class="text-muted fs-5">Give your photos a visual boost! Our enhancer intelligently increases brightness, sharpness, and contrast to make your dull or blurry images look crisp and vibrant — especially useful for scanned photos and low-light images.</p>
+    </div>
+    <div class="col-md-6 text-center animate__animated animate__fadeInLeft">
+      <img src="https://cdn-icons-png.flaticon.com/512/1221/1221390.png" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+    </div>
+  </div>
+  <hr>
+  <!-- Tool: Image Compressor -->
+  <div class="row align-items-center g-4 mb-5 scroll-fade">
+    <div class="col-md-6 animate__animated animate__fadeInLeft">
+      <h4>📉 Image Compressor</h4>
+      <p class="text-muted fs-5">Shrink your image files to save storage or enable faster uploads. Choose compression by percentage or target file size in KB/MB — with control over output quality and supported formats like PNG, JPEG, and WEBP.</p>
+    </div>
+    <div class="col-md-6 text-center animate__animated animate__fadeInRight">
+      <img src="https://cdn-icons-png.flaticon.com/512/7395/7395912.png" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+    </div>
+  </div>
+  <hr>
+  <!-- Tool: Crop Tool -->
+  <div class="row align-items-center g-4 mb-5 flex-md-row-reverse scroll-fade">
+    <div class="col-md-6 animate__animated animate__fadeInRight">
+      <h4>✂️ Crop Tool</h4>
+      <p class="text-muted fs-5">Effortlessly trim parts of your image with a draggable, resizable crop box. It’s perfect for removing unwanted edges, fitting frame sizes, or focusing on important content — whether for ID cards, social posts, or thumbnails.</p>
+    </div>
+    <div class="col-md-6 text-center animate__animated animate__fadeInLeft">
+      <img src="https://cdn-icons-png.flaticon.com/512/10763/10763510.png" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+    </div>
+  </div>
+  <hr>
+  <!-- Tool: Image to PDF -->
+  <div class="row align-items-center g-4 mb-5 scroll-fade">
+    <div class="col-md-6 animate__animated animate__fadeInLeft">
+      <h4>📄 Image to PDF</h4>
+      <p class="text-muted fs-5">Need to turn your images into documents? Upload one or many pictures, reorder if needed, and generate a clean, single PDF file ready to share or print. No watermarks or limitations.</p>
+    </div>
+    <div class="col-md-6 text-center animate__animated animate__fadeInRight">
+      <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+    </div>
+  </div>
+  <hr>
+  <!-- Tool: Stamp Tool -->
+  <div class="row align-items-center g-4 mb-5 flex-md-row-reverse scroll-fade">
+    <div class="col-md-6 animate__animated animate__fadeInRight">
+      <h4>🔖 Stamp Tool</h4>
+      <p class="text-muted fs-5">Watermark your images or documents with ease. Upload a PNG stamp or logo and freely drag it anywhere on the image/PDF — perfect for branding, approvals, and protecting creative content.</p>
+    </div>
+    <div class="col-md-6 text-center animate__animated animate__fadeInLeft">
+      <img src="https://cdn-icons-png.flaticon.com/512/2356/2356396.png" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+    </div>
+  </div>
+</div>
+</div><!-- Why Us Section --><div class="container py-5">
+  <div class="row align-items-center g-4 scroll-fade">
+    <div class="col-md-6 text-center animate_animated animate_fadeInUp">
+      <img src="https://cdn-icons-png.flaticon.com/512/3811/3811631.png" alt="Why Choose Us" class="img-fluid" style="max-height: 250px;">
+    </div>
+    <div class="col-md-6 animate_animated animate_fadeInUp">
+      <h2 class="fw-bold mb-3">🚀 Why Choose ToolMitra?</h2>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">✅ No Sign Up Required</li>
+        <li class="list-group-item">✅ Lightning Fast Results</li>
+        <li class="list-group-item">✅ Mobile Friendly Interface</li>
+        <li class="list-group-item">✅ 100% Free to Use</li>
+        <li class="list-group-item">✅ Built using AI & Django</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<footer class="bg-primary text-white pt-5 pb-4">
+  <div class="container text-center text-md-start">
+    <div class="row text-center text-md-start">
+      
+      <!-- Brand -->
+      <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+        <img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 70px;">
+        <p>All-in-one image toolkit built with love and precision. Background remover, compressor, enhancer, and more — all in one place, for free.</p>
+      </div>
+
+      <!-- Tools -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Tools</h5>
+        <p><a href="/remove-background/" class="text-white text-decoration-none">Background Remover</a></p>
+        <p><a href="/enhance-image/" class="text-white text-decoration-none">Image Enhancer</a></p>
+        <p><a href="/compress-image/" class="text-white text-decoration-none">Image Compressor</a></p>
+        <p><a href="/crop-image/" class="text-white text-decoration-none">Crop Image</a></p>
+        <p><a href="/image-to-pdf/" class="text-white text-decoration-none">Image to PDF</a></p>
+        <p><a href="/stamp-file/" class="text-white text-decoration-none">Stamp Tool</a></p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+        <p><i class="bi bi-house me-2"></i><a href="/" class="text-white text-decoration-none">Home</a></p>
+        <p><i class="bi bi-github me-2"></i><a href="https://github.com/rajadityasharma/" target="_blank" class="text-white text-decoration-none">GitHub</a></p>
+
+        <p><i class="bi bi-linkedin me-2"></i><a href="https://www.linkedin.com/in/aditya-kumar-7488584509-aditya?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=android_app" target="_blank" class="text-white text-decoration-none">LinkedIn</a></p>
+
+        <p><i class="bi bi-facebook me-2"></i><a href="https://www.facebook.com/adityakumar.sharma.211?mibextid=ZbWKwL" target="_blank" class="text-white text-decoration-none">Facebook</a></p>
+
+        <p><i class="bi bi-instagram me-2"></i><a href="https://www.instagram.com/invites/contact/?igsh=10vutqjs01kg2&amp;utm_content=3w0zwvs" target="_blank" class="text-white text-decoration-none">Instagram</a></p>
+
+        <p><i class="bi bi-twitter-x me-2"></i><a href="https://x.com/AdiyaSharma211?t=afQQ2KAA8K5KYkRQTkMQAw&amp;s=08" target="_blank" class="text-white text-decoration-none">X (Twitter)</a></p>
+
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-2 col-lg-2 col-xl-2 ms-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
+        <p>
+            <i class="bi bi-envelope me-2"></i>
+            <a href="mailto:adityasharmamama@gmail.com.app?subject=For%20Inquiry&body=Please%20let%20me%20know%20more%20about%20your%20services!!," class="text-white text-decoration-none">Email Us</a>
+        </p>
+        <p>
+        <i class="bi bi-telephone me-2"></i>
+        <a href="tel:+917488584509" class="text-white text-decoration-none">+91 74885 84509</a>
+        </p>
+        <p>
+        <i class="bi bi-chat-dots me-2"></i>
+        <a href="sms:+917488584509?&body=Please%20let%20me%20know%20more%20about%20your%20services!!" class="text-white text-decoration-none">Text Us</a>
+        </p>
+        <p>
+        <i class="bi bi-whatsapp me-2"></i>
+        <a href="https://wa.me/7488584509?text=Please%20let%20me%20know%20more%20about%20your%20services!!" class="text-white text-decoration-none" target="_blank">Chat on WhatsApp</a>
+        </p>
+      </div>
+    </div>
+
+    <hr class="mb-4" />
+
+    <div class="row align-items-center">
+      <div class="col-md-12 col-lg-12 d-lg-flex justify-content-center">
+        <p class="text-white mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="/" class="text-decoration-none text-light"><img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 30px;"> <strong>ToolMitra</strong></a> — All Rights Reserved. | &nbsp;</p>
+        <p> <hr> Developed and Maintainted by — <a href="https://aditya-kumar-portfolio.onrender.com/" class="text-decoration-none text-light"><strong>Aditya Kumar</strong></a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Font Awesome (if using icons) -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- Animate.css CDN --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Paste this before </body> tag -->
+<script>
+  const fadeElems = document.querySelectorAll('.scroll-fade');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  fadeElems.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

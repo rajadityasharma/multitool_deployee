@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolMitra | Image Compressor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .tool-card { border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .navbar-custom {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: font-size 0.5s ease;
+        }
+        .navbar-nav .nav-link:hover {
+            font-size: 17px;
+        }
+    </style>
+    <style>
+    .contact-sidebar {
+    position: fixed;
+    top: 40%;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 10px;
+    }
+
+    .contact-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.2),
+                inset 3px 3px 6px rgba(0, 0, 0, 0.2),
+                4px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease-in-out;
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .contact-icon::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 50%;
+    height: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    filter: blur(1px);
+    }
+
+    .contact-icon:hover {
+    transform: scale(1.1) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Color themes */
+    .contact-icon.whatsapp {
+    background: #25D366;
+    }
+
+    .contact-icon.phone {
+    background: #0d6efd;
+    }
+
+    .contact-icon.email {
+    background: #dc3545;
+    }
+    .contact-icon.sms {
+    background: #dca235;
+    }
+
+  </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modeSelect = document.querySelector('select[name="mode"]');
+            const unitSelect = document.querySelector('select[name="unit"]');
+
+            function toggleUnitOptions() {
+                const isTarget = modeSelect.value === 'target';
+                unitSelect.disabled = !isTarget;
+            }
+
+            modeSelect.addEventListener('change', toggleUnitOptions);
+            toggleUnitOptions();
+        });
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom shadow sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 50px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/remove-background/">Background Remover</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/enhance-image/">Image Enhancer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/compress-image/"><strong style="font-size: 17px;">Image Compressor</strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/crop-image/">Crop Image</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/image-to-pdf/">Image to PDF</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/stamp-file/">Stamp Tool</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/rajadityasharma/multitool" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Floating 3D Contact Sidebar -->
+    <div class="contact-sidebar">
+    <a href="https://wa.me/7488584509?text=Hi%20ToolMitra%20Team%2C%20I%20need%20help%20with%20your%20image%20tools." target="_blank" class="contact-icon whatsapp" title="WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+    <a href="tel:+917488584509" class="contact-icon phone" title="Call">
+        <i class="bi bi-telephone-fill"></i>
+    </a>
+    <a href="mailto:adityasharmamama@gmail.com.app?subject=Support%20Request%20from%20ToolMitra&body=Hi%20ToolMitra%20Team,%0A%0AI%20need%20help%20with%20your%20image%20tools.%20Please%20guide%20me%20with%20the%20steps.%0A%0AThanks!" class="contact-icon email" title="Email">
+        <i class="bi bi-envelope-fill"></i>
+    </a>
+    <a href="sms:+919876543210?&body=Hi%20ToolMitra%20team%2C%20I%20need%20help%20with%20the%20image%20compressor." class="contact-icon sms">
+        <i class="bi bi-chat-dots"></i>
+    </a>
+    </div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card p-4 tool-card">
+                    <h3 class="mb-4 text-center">🗜️ Image Compressor</h3>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" name="image" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Compression Mode</label>
+                            <select class="form-select" name="mode" required>
+                                <option value="percentage">Compress by Percentage</option>
+                                <option value="target">Compress to Target Size</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Compression Value</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="value" min="1" required>
+                                <select name="unit" class="form-select">
+                                    <option value="KB">KB</option>
+                                    <option value="MB">MB</option>
+                                </select>
+                            </div>
+                            <small class="form-text text-muted">Percentage (1-100) for quality or file size unit if mode is 'Target'</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Output Format</label>
+                            <select class="form-select" name="format">
+                                <option value="JPEG">JPEG</option>
+                                <option value="PNG">PNG</option>
+                                <option value="WEBP">WebP</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Resize (optional)</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="width" placeholder="Width">
+                                <input type="number" class="form-control" name="height" placeholder="Height">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Compress Image</button>
+                    </form>
+
+                    {% if image_data %}
+                    <hr class="my-4">
+                    <h5>🎉 Compressed Image:</h5>
+                    <img src="data:image/{{ format|lower }};base64,{{ image_data }}" class="img-fluid mb-3">
+                    <p>Original Size: {{ original_size }} KB<br>Compressed Size: {{ compressed_size }} KB</p>
+                    <a href="data:image/{{ format|lower }};base64,{{ image_data }}" download="compressed.{{ format|lower }}" class="btn btn-success">Download</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-primary text-white pt-5 pb-4">
+  <div class="container text-center text-md-start">
+    <div class="row text-center text-md-start">
+      
+      <!-- Brand -->
+      <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+        <img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 70px;">
+        <p>All-in-one image toolkit built with love and precision. Background remover, compressor, enhancer, and more — all in one place, for free.</p>
+      </div>
+
+      <!-- Tools -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Tools</h5>
+        <p><a href="/remove-background/" class="text-white text-decoration-none">Background Remover</a></p>
+        <p><a href="/enhance-image/" class="text-white text-decoration-none">Image Enhancer</a></p>
+        <p><a href="/compress-image/" class="text-white text-decoration-none">Image Compressor</a></p>
+        <p><a href="/crop-image/" class="text-white text-decoration-none">Crop Image</a></p>
+        <p><a href="/image-to-pdf/" class="text-white text-decoration-none">Image to PDF</a></p>
+        <p><a href="/stamp-file/" class="text-white text-decoration-none">Stamp Tool</a></p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+        <p><i class="bi bi-house me-2"></i><a href="/" class="text-white text-decoration-none">Home</a></p>
+        <p><i class="bi bi-github me-2"></i><a href="https://github.com/rajadityasharma/" target="_blank" class="text-white text-decoration-none">GitHub</a></p>
+
+        <p><i class="bi bi-linkedin me-2"></i><a href="https://www.linkedin.com/in/aditya-kumar-7488584509-aditya?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=android_app" target="_blank" class="text-white text-decoration-none">LinkedIn</a></p>
+
+        <p><i class="bi bi-facebook me-2"></i><a href="https://www.facebook.com/adityakumar.sharma.211?mibextid=ZbWKwL" target="_blank" class="text-white text-decoration-none">Facebook</a></p>
+
+        <p><i class="bi bi-instagram me-2"></i><a href="https://www.instagram.com/invites/contact/?igsh=10vutqjs01kg2&amp;utm_content=3w0zwvs" target="_blank" class="text-white text-decoration-none">Instagram</a></p>
+
+        <p><i class="bi bi-twitter-x me-2"></i><a href="https://x.com/AdiyaSharma211?t=afQQ2KAA8K5KYkRQTkMQAw&amp;s=08" target="_blank" class="text-white text-decoration-none">X (Twitter)</a></p>
+
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-2 col-lg-2 col-xl-2 ms-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
+        <p>
+            <i class="bi bi-envelope me-2"></i>
+            <a href="mailto:adityasharmamama@gmail.com.app?subject=For%20Inquiry&body=Please%20let%20me%20know%20more%20about%20your%20services!!," class="text-white text-decoration-none">Email Us</a>
+        </p>
+        <p>
+        <i class="bi bi-telephone me-2"></i>
+        <a href="tel:+917488584509" class="text-white text-decoration-none">+91 74885 84509</a>
+        </p>
+        <p>
+        <i class="bi bi-chat-dots me-2"></i>
+        <a href="sms:+917488584509?&body=Please%20let%20me%20know%20more%20about%20your%20services!!" class="text-white text-decoration-none">Text Us</a>
+        </p>
+        <p>
+        <i class="bi bi-whatsapp me-2"></i>
+        <a href="https://wa.me/7488584509?text=Please%20let%20me%20know%20more%20about%20your%20services!!" class="text-white text-decoration-none" target="_blank">Chat on WhatsApp</a>
+        </p>
+      </div>
+    </div>
+
+    <hr class="mb-4" />
+
+    <div class="row align-items-center">
+      <div class="col-md-12 col-lg-12 d-lg-flex justify-content-center">
+        <p class="text-white mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="/" class="text-decoration-none text-light"><img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 30px;"> <strong>ToolMitra</strong></a> — All Rights Reserved. | &nbsp;</p>
+        <hr><p>Developed and Maintainted by — <a href="https://aditya-kumar-portfolio.onrender.com/" class="text-decoration-none text-light"><strong>Aditya Kumar</strong></a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
