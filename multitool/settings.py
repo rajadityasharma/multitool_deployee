@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hsw_)7ftret5vk%bux6f!9+p*z&gml)q67lk6^m2!d-&lj@-@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['toolmitra.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
