@@ -1,1 +1,1 @@
-web: gunicorn multitool.wsgi:application
+web: gunicorn multitool.wsgi
