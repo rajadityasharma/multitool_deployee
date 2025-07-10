@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   {% load static %}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ToolMitra | Image Enhancer</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
-  <style>
+  <title>ToolMitra | Background Remover</title>
+    <!-- Bootstrap 5 CSS -->  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />  <!-- Google Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />  <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(120deg, #fff3e0, #ffffff);
+      background: linear-gradient(120deg, #e0f7fa, #ffffff);
       min-height: 100vh;
     }
 
     .card {
       backdrop-filter: blur(10px);
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.75);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       border-radius: 1.2rem;
       padding: 30px;
@@ -36,12 +29,12 @@
     }
 
     .btn-primary {
-      background-color: #ff9800;
+      background-color: #0066ff;
       border: none;
     }
 
     .btn-primary:hover {
-      background-color: #e68900;
+      background-color: #004de0;
     }
 
     .output-section img {
@@ -57,7 +50,7 @@
 
     .heading-icon {
       font-size: 2rem;
-      color: #ff9800;
+      color: #0066ff;
     }
 
     .navbar-custom {
@@ -142,7 +135,6 @@
 
   </style>
 </head>
-
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top">
@@ -154,10 +146,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="/remove-background/">Background Remover</a></li>
-          <li class="nav-item"><a class="nav-link" href="/enhance-image/"><strong class="shadow-lg p-2 rounded-2">Image Enhancer</strong></a></li>
+          <li class="nav-item"><a class="nav-link" href="/enhance-image/">Image Enhancer</a></li>
           <li class="nav-item"><a class="nav-link" href="/compress-image/">Image Compressor</a></li>
           <li class="nav-item"><a class="nav-link" href="/crop-image/">Crop Image</a></li>
-          <li class="nav-item"><a class="nav-link" href="/merge-image/">Murge Image</a></li>
+          <li class="nav-item"><a class="nav-link" href="/merge-image/"><strong class="shadow-lg p-2 rounded-2">Murge Image</strong></a></li>
           <li class="nav-item"><a class="nav-link" href="/image-to-pdf/">Image to PDF</a></li>
           <li class="nav-item"><a class="nav-link" href="/stamp-file/">Stamp Tool</a></li>
           <li class="nav-item"><a class="nav-link" href="https://github.com/rajadityasharma/multitool" target="_blank">GitHub</a></li>
@@ -183,30 +175,78 @@
         </a>
       </div>
     </div>
-  <div class="card text-center">
-    <div class="mb-3">
-      <div class="heading-icon">✨</div>
-      <h3 class="fw-bold mt-2">AI Image Enhancer</h3>
-      <p class="text-muted small">Improve your image's brightness, contrast and sharpness</p>
-    </div>
 
-    <form method="POST" enctype="multipart/form-data" class="text-start">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Image</label>
-        <input class="form-control" type="file" name="image" id="image" required>
-      </div>
-      <button type="submit" class="btn btn-info text-white w-100">Enhance Image</button>
-    </form>
+  <div class="container">
+    <div class="card p-4 shadow">
+        <h3 class="text-center mb-4">🧩 Image Merger Tool</h3>
 
-    {% if enhanced_image %}
-    <div class="output-section mt-4">
-      <h5 class="mb-3 fw-semibold">🔍 Enhanced Output:</h5>
-      <img src="data:image/png;base64,{{ enhanced_image }}" alt="Enhanced Image"/>
-      <br />
-      <a href="data:image/png;base64,{{ enhanced_image }}" download="enhanced.png" class="btn btn-success download-btn">⬇ Download Enhanced</a>
+        <form method="POST" enctype="multipart/form-data" class="text-start">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label">Upload Images</label>
+          <div id="image-upload-wrapper">
+            <input class="form-control mb-2" type="file" name="images" accept="image/*" required>
+          </div>
+          <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="add-image-btn">➕ Add More Images</button>
+          <small class="text-muted d-block mt-1">Add at least 2 images to merge.</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Merge Direction</label>
+            <select class="form-select" name="merge_direction" required>
+            <option value="horizontal">Side by Side (Horizontal)</option>
+            <option value="vertical">Top to Bottom (Vertical)</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Resize Images</label>
+            <select class="form-select" name="resize_option">
+            <option value="none">Don't Resize</option>
+            <option value="width">Match Width</option>
+            <option value="height">Match Height</option>
+            <option value="both">Match Width & Height</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Spacing (in pixels)</label>
+            <input class="form-control" type="number" name="spacing" value="10" min="0">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Background Color</label>
+            <input class="form-control form-control-color" type="color" name="bg_color" value="#ffffff">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Merge Images</button>
+        </form>
+
+        {% if merged_image %}
+        <div class="output-section mt-4 text-center">
+          <h5 class="mb-3">🖼️ Merged Image Preview:</h5>
+
+          <!-- Sliders for width & height -->
+          <div class="d-flex flex-column align-items-center mb-3">
+            <label class="form-label">Adjust Width (%)</label>
+            <input type="range" id="widthSlider" min="10" max="200" value="100" class="form-range" style="max-width: 300px;">
+
+            <label class="form-label mt-3">Adjust Height (%)</label>
+            <input type="range" id="heightSlider" min="10" max="200" value="100" class="form-range" style="max-width: 300px;">
+          </div>
+
+          <div style="overflow: auto; border: 2px solid #ccc; border-radius: 10px; padding: 10px;">
+            <img id="mergedPreview" src="data:image/png;base64,{{ merged_image }}" class="img-fluid" />
+          </div>
+
+          <a href="data:image/png;base64,{{ merged_image }}" download="merged_output.png" class="btn btn-success mt-4">
+            ⬇ Download Merged Image
+          </a>
+        </div>
+  {% endif %}
+
     </div>
-    {% endif %}
   </div>
   <footer class="bg-primary text-white pt-5 pb-4">
   <div class="container text-center text-md-start">
@@ -277,7 +317,48 @@
     </div>
   </div>
 </footer>
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- hii -->
+  <!-- Bootstrap JS -->  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>  <script>
+    const bgTypeSelect = document.getElementById('bg_type');
+    const colorPicker = document.getElementById('colorPicker');
+    const gradientPicker = document.getElementById('gradientPicker');
+    const bgImageInput = document.getElementById('bgImageInput');
+
+    bgTypeSelect.addEventListener('change', function () {
+      const selected = this.value;
+      colorPicker.style.display = selected === 'color' ? 'block' : 'none';
+      gradientPicker.style.display = selected === 'gradient' ? 'block' : 'none';
+      bgImageInput.style.display = selected === 'image' ? 'block' : 'none';
+    });
+  </script>
+  <script>
+  const wrapper = document.getElementById('image-upload-wrapper');
+  const addBtn = document.getElementById('add-image-btn');
+
+  addBtn.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.name = 'images';
+    input.className = 'form-control mb-2';
+    input.accept = 'image/*';
+    wrapper.appendChild(input);
+  });
+</script>
+<script>
+  const widthSlider = document.getElementById('widthSlider');
+  const heightSlider = document.getElementById('heightSlider');
+  const mergedImage = document.getElementById('mergedPreview');
+
+  function updateSize() {
+    const widthPercent = widthSlider.value;
+    const heightPercent = heightSlider.value;
+    mergedImage.style.width = widthPercent + "%";
+    mergedImage.style.height = heightPercent + "%";
+  }
+
+  widthSlider.addEventListener('input', updateSize);
+  heightSlider.addEventListener('input', updateSize);
+</script>
+
 </body>
 </html>

@@ -253,3 +253,58 @@ def stamp_file(request):
         'base_image_data': base_image_data,
         'stamp_image_data': stamp_image_data,
     })
+
+
+
+def image_merger(request):
+    merged_image = None
+
+    if request.method == "POST":
+        images = request.FILES.getlist("images")
+        merge_direction = request.POST.get("merge_direction", "horizontal")
+        resize_option = request.POST.get("resize_option", "none")
+        spacing = int(request.POST.get("spacing", 0))
+        bg_color = request.POST.get("bg_color", "#FFFFFF")
+
+        if len(images) >= 2:
+            pil_images = [Image.open(img).convert("RGBA") for img in images]
+
+            # 🔄 Resize Logic
+            if resize_option == "width":
+                min_width = min(img.width for img in pil_images)
+                pil_images = [img.resize((min_width, int(img.height * min_width / img.width))) for img in pil_images]
+            elif resize_option == "height":
+                min_height = min(img.height for img in pil_images)
+                pil_images = [img.resize((int(img.width * min_height / img.height), min_height)) for img in pil_images]
+            elif resize_option == "both":
+                min_width = min(img.width for img in pil_images)
+                min_height = min(img.height for img in pil_images)
+                pil_images = [img.resize((min_width, min_height)) for img in pil_images]
+
+            # 🔳 Calculate final canvas size
+            if merge_direction == "horizontal":
+                total_width = sum(img.width for img in pil_images) + spacing * (len(pil_images) - 1)
+                max_height = max(img.height for img in pil_images)
+                final_image = Image.new("RGBA", (total_width, max_height), bg_color)
+                x_offset = 0
+                for img in pil_images:
+                    final_image.paste(img, (x_offset, 0), img)
+                    x_offset += img.width + spacing
+
+            else:  # vertical
+                total_height = sum(img.height for img in pil_images) + spacing * (len(pil_images) - 1)
+                max_width = max(img.width for img in pil_images)
+                final_image = Image.new("RGBA", (max_width, total_height), bg_color)
+                y_offset = 0
+                for img in pil_images:
+                    final_image.paste(img, (0, y_offset), img)
+                    y_offset += img.height + spacing
+
+            # ✅ Convert to base64 for frontend
+            buffer = BytesIO()
+            final_image.convert("RGB").save(buffer, format="PNG")
+            merged_image = base64.b64encode(buffer.getvalue()).decode()
+
+    return render(request, "image_merger.html", {
+        "merged_image": merged_image
+    })

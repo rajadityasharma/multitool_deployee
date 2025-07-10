@@ -108,39 +108,44 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom shadow sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/"><img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 50px;"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/remove-background/">Background Remover</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/enhance-image/">Image Enhancer</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/compress-image/"><strong style="font-size: 17px;">Image Compressor</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/crop-image/">Crop Image</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/image-to-pdf/">Image to PDF</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/stamp-file/">Stamp Tool</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/rajadityasharma/multitool" target="_blank">GitHub</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container navbar-custom shadow-lg py-3 px-5 rounded-4">
+      <a class="navbar-brand" href="/"><img src="{% static "image/ToolMitra_Logo.png" %}" alt="ToolMitra" style="height: 50px;"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/remove-background/">Background Remover</a></li>
+          <li class="nav-item"><a class="nav-link" href="/enhance-image/">Image Enhancer</a></li>
+          <li class="nav-item"><a class="nav-link" href="/compress-image/"><strong class="shadow-lg p-2 rounded-2">Image Compressor</strong></a></li>
+          <li class="nav-item"><a class="nav-link" href="/crop-image/">Crop Image</a></li>
+          <li class="nav-item"><a class="nav-link" href="/merge-image/">Murge Image</a></li>
+          <li class="nav-item"><a class="nav-link" href="/image-to-pdf/">Image to PDF</a></li>
+          <li class="nav-item"><a class="nav-link" href="/stamp-file/">Stamp Tool</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/rajadityasharma/multitool" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
     <!-- Floating 3D Contact Sidebar -->
     <div class="contact-sidebar">
-    <a href="https://wa.me/7488584509?text=Hi%20ToolMitra%20Team%2C%20I%20need%20help%20with%20your%20image%20tools." target="_blank" class="contact-icon whatsapp" title="WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
-    <a href="tel:+917488584509" class="contact-icon phone" title="Call">
-        <i class="bi bi-telephone-fill"></i>
-    </a>
-    <a href="mailto:adityasharmamama@gmail.com.app?subject=Support%20Request%20from%20ToolMitra&body=Hi%20ToolMitra%20Team,%0A%0AI%20need%20help%20with%20your%20image%20tools.%20Please%20guide%20me%20with%20the%20steps.%0A%0AThanks!" class="contact-icon email" title="Email">
-        <i class="bi bi-envelope-fill"></i>
-    </a>
-    <a href="sms:+919876543210?&body=Hi%20ToolMitra%20team%2C%20I%20need%20help%20with%20the%20image%20compressor." class="contact-icon sms">
-        <i class="bi bi-chat-dots"></i>
-    </a>
+      <div class="p-2 rounded-4">
+        <a href="https://wa.me/7488584509?text=Hi%20ToolMitra%20Team%2C%20I%20need%20help%20with%20your%20image%20tools." target="_blank" class="contact-icon navbar-custom" title="WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a><br>
+        <a href="tel:+917488584509" class="contact-icon navbar-custom" title="Call">
+            <i class="bi bi-telephone-fill"></i>
+        </a>
+        <br>
+        <a href="mailto:adityasharmamama@gmail.com.app?subject=Support%20Request%20from%20ToolMitra&body=Hi%20ToolMitra%20Team,%0A%0AI%20need%20help%20with%20your%20image%20tools.%20Please%20guide%20me%20with%20the%20steps.%0A%0AThanks!" class="contact-icon navbar-custom" title="Email">
+            <i class="bi bi-envelope-fill"></i>
+        </a><br>
+        <a href="sms:+919876543210?&body=Hi%20ToolMitra%20team%2C%20I%20need%20help%20with%20the%20image%20compressor." class="contact-icon navbar-custom">
+            <i class="bi bi-chat-dots"></i>
+        </a>
+      </div>
     </div>
     <div class="container py-5">
         <div class="row justify-content-center">

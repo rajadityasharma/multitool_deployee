@@ -9,5 +9,7 @@ urlpatterns = [
     path('image-to-pdf/', views.image_to_pdf, name='image_to_pdf'),
     path('crop-image/', views.image_cropper, name='image_cropper'),
     path('stamp-file/', views.stamp_file, name='stamp_file'),
+    path('merge-image/', views.image_merger, name='merge_image'),
     # path('dashboard/', views.dashboard, name='dashboard'),
+
 ]
